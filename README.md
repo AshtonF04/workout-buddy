@@ -1,0 +1,1 @@
+# Full stack web application built using React, NodeJS, Express, and MongoDB
