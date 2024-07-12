@@ -1,31 +1,32 @@
+// require the express module
 const express = require('express')
 
+// create a new express router to handle workout routes
 const router = express.Router()
 
+// import the workout controller functions
+const {
+    getWorkout,
+    getWorkouts,
+    createWorkout,
+    deleteWorkout,
+    updateWorkout
+} = require('../controllers/workoutController')
+
 // GET all workouts
-router.get('/', (req, res) => {
-    res.json({msg: 'get all workouts'})
-})
+router.get('/', getWorkouts)
 
 // GET single workout
-router.get('/:id', (req, res) => {
-    res.json({msg: 'get single workout'})
-})
+router.get('/:id', getWorkout)
 
 // POST new workout
-router.post('/create', (req, res) => {
-    res.json({msg: 'create new workout'})
-})
+router.post('/create', createWorkout)
 
 // DELETE workout
-router.delete('/:id', (req, res) => {
-    res.json({msg: 'delete a workout'})
-})
+router.delete('/:id', deleteWorkout)
 
-// UPDATE workout
-router.patch('/:id', (req, res) => {
-    res.json({msg: 'update a workout'})
-})
+// PATCH workout
+router.patch('/:id', updateWorkout)
 
 
 module.exports = router

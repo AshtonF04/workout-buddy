@@ -3,11 +3,13 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 
+// require the workout routes file
 const workoutRoutes = require('./routes/workout')
 
 // create express ap
 const app = express()
 
+// allow the server to handle json req body
 app.use(express.json())
 
 // log request details to console
