@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
+
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
-    // useState hook to store and update workouts
-    const [workouts, setWorkouts] = useState(null)
+    const {workouts, dispatch} =  useWorkoutsContext()
 
     // useEffect hook to fire once when page is loaded and fetch data
     useEffect(() => {
@@ -17,7 +18,7 @@ const Home = () => {
 
             // run logic only if response is ok
             if (response.ok){
-                setWorkouts(json)
+                dispatch({type: 'SET_WORKOUTS', payload: json})
             }
         }
 

@@ -1,11 +1,15 @@
 import { useState } from "react"
+import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
 
 const WorkoutForm = () => {
+    const { dispatch } = useWorkoutsContext()
+
     // Create states for all workout fields
     const [title, setTitle] = useState('')
     const [load, setLoad] = useState('')
     const [reps, setReps] = useState('')
     const [error, setError] = useState(null)
+    const [emptyFields, setEmptyFields] = useState([])
 
     const handleSubmit = async(e) => {
         e.preventDefault()
@@ -20,15 +24,18 @@ const WorkoutForm = () => {
             }
         })
 
-        const json = await response.json
+        const json = await response.json()
 
         if (!response.ok){
             setError(json.error)
+            setEmptyFields(json.empty)
         } else {
-            setError(null)
+            setError(null) 
+            setEmptyFields([])
             setTitle('')
             setLoad('')
             setReps('')
+            dispatch({type: "CREATE_WORKOUTS", payload: json})
         }
     }
 
@@ -52,7 +59,7 @@ const WorkoutForm = () => {
                     type="number" 
                     onChange={(e) => setLoad(e.target.value)}
                     value={load}
-                    className="rounded-md p-1"
+                    className="remove-arrow rounded-md p-1"
                 />
             </div>
             
@@ -62,12 +69,11 @@ const WorkoutForm = () => {
                     type="number" 
                     onChange={(e) => setReps(e.target.value)}
                     value={reps}
-                    className="rounded-md p-1"
+                    className="remove-arrow rounded-md p-1"
                 />
             </div>
 
-            <button className="justify-self-start w-24 py-1 rounded-md bg-blue-400 font-bold">Submit</button>
-            
+            <button className="justify-self-start w-24 py-1 rounded-md bg-blue-400 text-white font-bold">Submit</button>
         </form>
      );
 }
