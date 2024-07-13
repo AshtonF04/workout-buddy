@@ -27,6 +27,7 @@ const WorkoutForm = () => {
         const json = await response.json()
 
         if (!response.ok){
+            console.log(json.error)
             setError(json.error)
             setEmptyFields(json.empty)
         } else {
