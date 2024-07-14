@@ -27,9 +27,8 @@ const WorkoutForm = () => {
         const json = await response.json()
 
         if (!response.ok){
-            console.log(json.error)
-            setError(json.error)
-            setEmptyFields(json.empty)
+            setError(json.msg)
+            setEmptyFields(json.emptyFields)
         } else {
             setError(null) 
             setEmptyFields([])
@@ -50,7 +49,7 @@ const WorkoutForm = () => {
                     type="text" 
                     onChange={(e) => setTitle(e.target.value)}
                     value={title}
-                    className="rounded-md p-1"
+                    className={`rounded-md p-1 ${emptyFields.includes('title') ? 'border-2 border-red-400' : ''}`}
                 />
             </div>
             
@@ -60,7 +59,7 @@ const WorkoutForm = () => {
                     type="number" 
                     onChange={(e) => setLoad(e.target.value)}
                     value={load}
-                    className="remove-arrow rounded-md p-1"
+                    className={`remove-arrow rounded-md p-1 ${emptyFields.includes('load') ? 'border-2 border-red-400' : ''}`}
                 />
             </div>
             
@@ -70,11 +69,12 @@ const WorkoutForm = () => {
                     type="number" 
                     onChange={(e) => setReps(e.target.value)}
                     value={reps}
-                    className="remove-arrow rounded-md p-1"
+                    className={`remove-arrow rounded-md p-1 ${emptyFields.includes('reps') ? 'border-2 border-red-400' : ''}`}
                 />
             </div>
 
             <button className="justify-self-start w-24 py-1 rounded-md bg-blue-400 text-white font-bold">Submit</button>
+            {error && <p className="text-red-400 text-sm">{error}</p>}
         </form>
      );
 }
