@@ -5,7 +5,7 @@ import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
-    const {workouts, dispatch} =  useWorkoutsContext()
+    const {workouts, dispatch: workoutsDispatch} =  useWorkoutsContext()
 
     // useEffect hook to fire once when page is loaded and fetch data
     useEffect(() => {
@@ -18,7 +18,7 @@ const Home = () => {
 
             // run logic only if response is ok
             if (response.ok){
-                dispatch({type: 'SET_WORKOUTS', payload: json})
+                workoutsDispatch({type: 'SET_WORKOUTS', payload: json})
             }
         }
 

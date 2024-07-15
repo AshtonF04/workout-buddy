@@ -1,4 +1,5 @@
 import { disableBodyScroll } from 'body-scroll-lock'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
 
@@ -27,7 +28,7 @@ const Login = () => {
                     <button className="rounded-full shadow-lg bg-blue-400 text-white font-bold w-32 h-12">LOGIN</button>
                 </form>
 
-                <button className="row-span-1 text-blue-400">Sign Up</button>
+                <Link to='/signup' className="row-span-1 w-full text-center text-blue-400">Signup</Link>
             </div>
         </div>
     );
