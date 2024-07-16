@@ -10,10 +10,10 @@ import Navbar from './components/Navbar';
 
 function App() {
   return (
-    <div className='mx-8 my-4'>
+    <div className='flex flex-col h-screen px-2 lg:px-8 py-2'>
       <BrowserRouter>
         <Navbar />
-        <div>
+        <div className='basis-full'>
           <Routes>
             <Route path='/' element={<Home />}/>
             <Route path='/login' element={<Login />}/>

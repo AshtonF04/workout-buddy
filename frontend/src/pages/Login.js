@@ -1,34 +1,41 @@
-import { disableBodyScroll } from 'body-scroll-lock'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
+import { useState } from 'react';
+import { useLogin } from '../hooks/useLogin';
 
 const Login = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
-    disableBodyScroll(document.querySelector('#lock-scroll'))
+    const {login, error, isLoading} = useLogin()
+
+    const handleLogin = (e) => {
+        e.preventDefault()
+        login(email, password)
+    }
 
     return (  
-        <div className="grid grid-cols-3 h-screen m-16 lock-scroll">
-            <div className="col-start-2 h-3/4 bg-slate-100 rounded-lg shadow-xl p-8 flex flex-col gap-60">
-                <form className="flex flex-col items-center gap-12">
-                    <h2 className="text-2xl font-bold">Login</h2>
-
-                    <div className="flex flex-col gap-8">
-                        <input 
-                        className="rounded-xl h-12 w-80 shadow-md p-2"
-                        type='text'
-                        placeholder='email address'
-                        />
-
-                        <input 
-                        className="rounded-xl h-12 w-80 shadow-md p-2"
-                        type="text"
-                        placeholder="password"
-                        />
-                    </div>
-
-                    <button className="rounded-full shadow-lg bg-blue-400 text-white font-bold w-32 h-12">LOGIN</button>
+        <div className='h-full flex flex-col justify-center lg:items-center'>
+            <div className='flex flex-col items-center lg:bg-slate-100 lg:shadow-xl lg:rounded-lg lg:h-[40rem] lg:w-1/3 lg:p-4 lg:justify-center'>
+                <h2 className='text-xl font-bold mb-4'>Login</h2>
+                <form className='flex flex-col w-full items-center gap-8 mb-12'>
+                    <input
+                    type='email'
+                    placeholder='email address'
+                    className='shadow-lg rounded-md h-12 w-4/5 border-2 border-slate-200 p-1'
+                    value={email}
+                    onChange={(e) => {setEmail(e.target.value)}}
+                    />
+                    <input
+                    type='password'
+                    placeholder='password'
+                    className='shadow-lg rounded-md h-12 w-4/5 border-2 border-slate-200 p-1'
+                    value={password}
+                    onChange={(e) => {setPassword(e.target.value)}}
+                    />
+                    <button onClick={handleLogin} className='rounded-lg shadow-lg bg-blue-300 w-32 h-12 text-white font-bold'>LOGIN</button>
                 </form>
-
-                <Link to='/signup' className="row-span-1 w-full text-center text-blue-400">Signup</Link>
+                <Link to='/signup' className='text-blue-300'>Signup</Link>
+                {error && <div>{error}</div>}
             </div>
         </div>
     );
