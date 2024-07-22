@@ -4,6 +4,7 @@ import { useAuthContext } from "./useAuthContext"
 export const useLogin = () => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
+    const [emptyFields, setEmptyFields] = useState(null)
 
     const { dispatch } = useAuthContext()
 
@@ -11,6 +12,7 @@ export const useLogin = () => {
         // set states
         setError(null)
         setIsLoading(true)
+        setEmptyFields(null)
 
         // send API request
         const response = await fetch('/api/user/login', {
@@ -24,7 +26,8 @@ export const useLogin = () => {
         // check response
         if (!response.ok){
             setIsLoading(false)
-            setError(json.error)
+            setError(json.msg)
+            setEmptyFields(json.emptyFields)
         }
         if (response.ok){
             // set user in local storage
@@ -37,5 +40,5 @@ export const useLogin = () => {
         }
     }
 
-    return { login, isLoading, error }
+    return { login, isLoading, error, emptyFields }
 }

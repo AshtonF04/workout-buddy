@@ -1,8 +1,12 @@
 // require the express module
 const express = require('express')
 
+const requireAuth = require('../middleware/requireAuth')
+
 // create a new express router to handle workout routes
 const router = express.Router()
+
+router.use(requireAuth)
 
 // import the workout controller functions
 const {

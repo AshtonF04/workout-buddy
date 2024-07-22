@@ -5,7 +5,7 @@ import { useState } from 'react';
 const Signup = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const { signup, isLoading, error } = useSignup()
+    const { signup, isLoading, error, emptyFields } = useSignup()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -21,21 +21,21 @@ const Signup = () => {
                     <input
                     type='email'
                     placeholder='email address'
-                    className='shadow-lg rounded-md h-12 w-4/5 border-2 border-slate-200 p-1'
+                    className={`shadow-lg rounded-md h-12 w-4/5 border-2 ${emptyFields && emptyFields.includes('email') ? 'border-red-300' : 'border-slate-300'} p-1`}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     />
                     <input
                     type='password'
                     placeholder='password'
-                    className='shadow-lg rounded-md h-12 w-4/5 border-2 border-slate-200 p-1'
+                    className={`shadow-lg rounded-md h-12 w-4/5 border-2 ${emptyFields && emptyFields.includes('password') ? 'border-red-300' : 'border-slate-300'} p-1`}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     />
                     <button disabled={isLoading} className='rounded-lg shadow-lg bg-blue-300 w-32 h-12 text-white font-bold'>SIGNUP</button>
                 </form>
                 <Link to='/login' className='text-blue-300'>Login</Link>
-                {error && <div>{error}</div>}
+                {error && error != "Must enter all fields." && <div className="mt-4 border-2 border-red-400 rounded-md p-2 bg-red-300">{error}</div>}
             </div>
         </div>
     );

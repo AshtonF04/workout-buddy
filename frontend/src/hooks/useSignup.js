@@ -4,11 +4,14 @@ import { useAuthContext } from './useAuthContext'
 export const useSignup = () => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
+    const [emptyFields, setEmptyFields] = useState(null)
+
     const { dispatch } = useAuthContext()
 
     const signup = async (email, password) => {
         setIsLoading(true)
         setError(null)
+        setEmptyFields(null)
 
         const response = await fetch('/api/user/signup', {
             method: 'POST',
@@ -20,7 +23,8 @@ export const useSignup = () => {
 
         if (!response.ok){
             setIsLoading(false)
-            setError(json.error)
+            setError(json.msg)
+            setEmptyFields(json.emptyFields)
         }
         if (response.ok){
             // save user to local storage
@@ -33,5 +37,5 @@ export const useSignup = () => {
         }
     }
 
-    return { signup, isLoading, error }
+    return { signup, isLoading, error, emptyFields }
 }

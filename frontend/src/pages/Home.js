@@ -1,17 +1,23 @@
 import { useEffect, useState } from "react";
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
+import { useAuthContext } from "../hooks/useAuthContext"
 
 import WorkoutDetails from "../components/WorkoutDetails";
 import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
     const {workouts, dispatch: workoutsDispatch} =  useWorkoutsContext()
+    const { user } = useAuthContext()
 
     // useEffect hook to fire once when page is loaded and fetch data
     useEffect(() => {
         const fetchWorkouts = async() => {
             // API request to get workouts from database 
-            const response = await fetch('/api/workouts')
+            const response = await fetch('/api/workouts', {
+                headers: {
+                    'authorization': `Bearer ${user.token}`
+                }
+            })
 
             // store json response from fetch
             const json = await response.json()
@@ -22,8 +28,10 @@ const Home = () => {
             }
         }
 
-        fetchWorkouts()
-    }, [])
+        if (user){
+            fetchWorkouts()
+        }
+    }, [user])
 
     return ( 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
